@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="img/logo.png">
+<title>Hamilton's Healing Hearts</title>
+<meta name="description" content="Hamilton's Healing Hearts is a senior and special-needs dog and cat rescue in Willard, North Carolina.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: a farm-rescue site built around the kennel card. Pine green and paw-print red on a pale field, grey-muzzle neutrals, one heartbeat line that runs through the home page. */
+:root{
+  --field:#F2F4EF;      /* page ground, pale and slightly green */
+  --card:#FFFFFF;
+  --ink:#17241E;        /* pine-black text */
+  --ink-2:#4A5A52;      /* secondary text */
+  --pine:#1F3F33;       /* deep band color */
+  --pine-2:#2C5646;
+  --heart:#C8282F;      /* logo red */
+  --heart-d:#A31E24;
+  --muzzle:#CDD1C9;     /* grey-muzzle neutral for rules and chips */
+  --muzzle-2:#E3E6DF;
+  --straw:#E2B65A;      /* hay accent, used sparingly on dark */
+  --on-dark:#F2F4EF;
+  --on-dark-2:#B9C7BF;
+  --line:rgba(23,36,30,.14);
+  --f-display:"Bricolage Grotesque", "Avenir Next Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body:"Figtree", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --r:18px;
+  --wrap:1240px;
+  --ease:cubic-bezier(.2,.7,.1,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--field);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:700;line-height:1.02;letter-spacing:-.02em;margin:0;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(24px, env(safe-area-inset-left,0px));padding-right:max(24px, env(safe-area-inset-right,0px))}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:8px;z-index:100}
+.skip:focus{left:12px}
+:focus-visible{outline:3px solid var(--heart);outline-offset:3px;border-radius:6px}
+
+/* ---------- header ---------- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--field)}
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;transition:transform .45s var(--ease), background .3s, box-shadow .3s}
+.hdr.solid{background:rgba(242,244,239,.92);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);box-shadow:0 1px 0 var(--line)}
+.hdr.hide{transform:translateY(-110%)}
+.hdr .wrap{display:flex;align-items:center;gap:24px;height:78px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;margin-right:auto;min-width:0}
+.brand img{width:46px;height:auto}
+.brand b{font-family:var(--f-display);font-weight:800;font-size:19px;line-height:1;letter-spacing:-.01em;display:block}
+.brand small{display:block;font-size:12.5px;color:var(--ink-2);margin-top:3px;letter-spacing:.01em}
+.nav{display:flex;align-items:center;gap:4px}
+.nav a.nl{text-decoration:none;font-weight:600;font-size:15.5px;padding:9px 14px;border-radius:999px;position:relative;transition:background .25s}
+.nav a.nl:hover{background:var(--muzzle-2)}
+.nav a.nl[aria-current=page]{background:var(--ink);color:var(--field)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-body);font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer;padding:15px 24px;border-radius:999px;line-height:1;transition:background .25s, color .25s, transform .25s var(--ease)}
+.btn svg{width:18px;height:18px;flex:none;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+.btn-red{background:var(--heart);color:#fff}
+.btn-red:hover{background:var(--heart-d)}
+.btn-ink{background:var(--ink);color:var(--field)}
+.btn-ink:hover{background:var(--pine-2)}
+.btn-line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn-line:hover{background:var(--ink);color:var(--field)}
+.btn-light{background:var(--field);color:var(--ink)}
+.btn-light:hover{background:#fff}
+.btn-sm{padding:12px 18px;font-size:15px}
+.menu-btn{display:none;width:46px;height:46px;border-radius:50%;border:0;background:var(--ink);color:var(--field);cursor:pointer;align-items:center;justify-content:center}
+.menu-btn span{display:block;width:18px;height:2px;background:currentColor;position:relative;transition:transform .3s}
+.menu-btn span::before,.menu-btn span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:currentColor;transition:transform .3s, top .3s}
+.menu-btn span::before{top:-6px}.menu-btn span::after{top:6px}
+.menu-open .menu-btn span{background:transparent}
+.menu-open .menu-btn span::before{top:0;transform:rotate(45deg)}
+.menu-open .menu-btn span::after{top:0;transform:rotate(-45deg)}
+.mm{position:fixed;inset:0;z-index:45;background:var(--pine);color:var(--on-dark);padding:calc(env(safe-area-inset-top,0px) + 110px) max(24px, env(safe-area-inset-right,0px)) 40px max(24px, env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:28px;clip-path:circle(0% at calc(100% - 46px) 40px);transition:clip-path .6s var(--ease);visibility:hidden}
+.menu-open .mm{clip-path:circle(150% at calc(100% - 46px) 40px);visibility:visible}
+.mm nav{display:flex;flex-direction:column;gap:4px}
+.mm nav a{font-family:var(--f-display);font-weight:700;font-size:44px;text-decoration:none;line-height:1.15}
+.mm nav a[aria-current=page]{color:var(--straw)}
+.mm p{color:var(--on-dark-2);font-size:15px}
+
+/* ---------- views ---------- */
+main{transition:opacity .26s ease, transform .26s ease}
+main.leaving{opacity:0;transform:translateY(8px)}
+.view{display:none}
+.view.on{display:block}
+section{position:relative}
+.pad{padding-block:120px}
+.pad-s{padding-block:80px}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--ink-2)}
+.kicker::before{content:"";width:22px;height:2px;background:var(--heart);border-radius:2px}
+.dark .kicker{color:var(--on-dark-2)}
+.h-xl{font-size:clamp(48px, 8.4vw, 124px);font-weight:800;letter-spacing:-.035em;line-height:.94}
+.h-l{font-size:clamp(38px, 5.4vw, 76px);font-weight:800;letter-spacing:-.03em;line-height:.98}
+.h-m{font-size:clamp(28px, 3.2vw, 44px)}
+.lede{font-size:clamp(18px, 1.5vw, 21px);line-height:1.55;color:var(--ink-2);max-width:56ch}
+.dark{background:var(--pine);color:var(--on-dark)}
+.dark .lede{color:var(--on-dark-2)}
+.line{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+.line > span{display:inline-block}
+.red{color:var(--heart)}
+
+/* ---------- hero ---------- */
+.hero{padding-block:56px 110px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center}
+.hero h1{margin:22px 0 28px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:15px;color:var(--ink-2)}
+.hero-meta b{color:var(--ink);font-weight:700}
+.fan{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:auto auto;gap:18px;max-width:100%}
+.kc{position:relative;display:flex;flex-direction:column;min-width:0;background:var(--card);border-radius:22px;padding:12px 12px 16px;box-shadow:0 30px 60px -32px rgba(23,36,30,.4), 0 2px 0 rgba(23,36,30,.04);transition:transform .5s var(--ease), box-shadow .5s var(--ease)}
+.kc:hover{transform:translateY(-6px);box-shadow:0 36px 64px -30px rgba(23,36,30,.5)}
+.kc .ph{border-radius:14px;overflow:hidden;aspect-ratio:4/3.3;background:var(--muzzle-2)}
+.kc .ph img{width:100%;height:100%;object-fit:cover}
+.kc .tag{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:14px 6px 0}
+.kc .tag b{font-family:var(--f-display);font-size:26px;font-weight:800;letter-spacing:-.02em}
+.kc .tag span{font-size:13.5px;color:var(--ink-2);text-align:right}
+.kc.k3{grid-column:1;grid-row:1 / span 2}
+.kc.k3 .ph{flex:1;aspect-ratio:auto;min-height:320px}
+.kc.k1{grid-column:2;grid-row:1}
+.kc.k2{grid-column:2;grid-row:2}
+.hero-meta .gm{display:inline-flex;align-items:center;gap:8px;color:var(--heart);font-weight:700}
+.hero-meta .gm svg{width:18px;height:18px}
+
+/* ---------- heartbeat statement ---------- */
+.beat{padding-block:40px 120px}
+.beat svg{width:100%;height:auto;display:block;overflow:visible}
+.beat .trace{fill:none;stroke:var(--heart);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.beat .trace-bg{fill:none;stroke:var(--muzzle);stroke-width:1.5;stroke-dasharray:2 7;stroke-linecap:round}
+.beat .stmt{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:48px;margin-top:56px;align-items:start}
+.beat .stmt p.big{font-family:var(--f-display);font-weight:600;font-size:clamp(26px,3vw,40px);line-height:1.18;letter-spacing:-.015em}
+.beat .stmt p.big .w{opacity:.18;transition:opacity .2s}
+.beat .stmt aside{font-size:15.5px;color:var(--ink-2);border-left:2px solid var(--heart);padding-left:18px}
+.beat .stmt aside b{display:block;color:var(--ink);font-size:17px;margin-bottom:6px}
+
+/* ---------- waiting now: horizontal kennel cards ---------- */
+.waiting{overflow:hidden}
+.waiting .head{display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap;margin-bottom:48px}
+.track{display:flex;gap:22px;will-change:transform}
+.pc{flex:0 0 300px;background:var(--card);border-radius:22px;padding:12px;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);box-shadow:0 1px 0 var(--line);transition:transform .45s var(--ease), box-shadow .45s var(--ease)}
+.pc:hover{transform:translateY(-6px);box-shadow:0 26px 50px -30px rgba(23,36,30,.5)}
+.pc .ph{border-radius:14px;overflow:hidden;aspect-ratio:1/1;background:var(--muzzle-2);position:relative}
+.pc .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.pc:hover .ph img{transform:scale(1.05)}
+.pc .flag{position:absolute;left:10px;top:10px;background:var(--ink);color:var(--field);font-size:12.5px;font-weight:700;padding:6px 10px;border-radius:8px}
+.pc .flag.sr{background:var(--heart);color:#fff}
+.pc .info{padding:16px 8px 6px;display:grid;gap:12px}
+.pc h3{font-size:30px;font-weight:800}
+.pc dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14.5px}
+.pc dt{color:var(--ink-2)}
+.pc dd{margin:0;font-weight:600}
+.pc .go{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 8px 4px;border-top:1px solid var(--line);font-weight:700;font-size:15px}
+.pc .go svg{width:18px;height:18px;transition:transform .3s var(--ease)}
+.pc:hover .go svg{transform:translateX(4px)}
+.pc.more{background:var(--heart);color:#fff;justify-content:space-between;padding:28px}
+.pc.more h3{font-size:40px;line-height:1}
+.pc.more p{opacity:.9}
+.pc.more .go{border-color:rgba(255,255,255,.3)}
+.waiting.pinned{height:100vh;display:flex;flex-direction:column;justify-content:center}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:56px;counter-reset:s}
+.step{background:var(--card);border-radius:var(--r);padding:30px 28px 32px;position:relative;overflow:hidden}
+.step .n{font-family:var(--f-display);font-weight:800;font-size:15px;color:var(--heart);display:block;margin-bottom:56px}
+.step h3{font-size:30px;margin-bottom:12px}
+.step p{color:var(--ink-2);font-size:16px}
+.step .bar{position:absolute;left:0;bottom:0;height:4px;width:100%;background:var(--heart);transform-origin:0 50%;transform:scaleX(.08)}
+.facts{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:36px;font-size:15.5px;color:var(--ink-2)}
+.facts b{color:var(--ink)}
+
+/* ---------- ways to help (rows) ---------- */
+.ways{border-top:1px solid var(--line);margin-top:48px}
+.way{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr) auto;gap:32px;align-items:center;padding:30px 0;border-bottom:1px solid var(--line);text-decoration:none;position:relative}
+.way h3{font-size:clamp(32px,4vw,56px);font-weight:800;transition:transform .45s var(--ease), color .3s}
+.way p{color:var(--ink-2);max-width:48ch}
+.way .arr{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1.5px var(--ink);transition:background .3s, color .3s, transform .45s var(--ease)}
+.way .arr svg{width:22px;height:22px}
+.way:hover h3{transform:translateX(12px);color:var(--heart)}
+.way:hover .arr{background:var(--heart);color:#fff;box-shadow:none;transform:rotate(-45deg)}
+.way .peek{position:absolute;right:120px;top:50%;width:180px;aspect-ratio:4/5;border-radius:14px;overflow:hidden;pointer-events:none;opacity:0;transform:translateY(-50%) rotate(6deg) scale(.9);transition:opacity .35s, transform .5s var(--ease);z-index:2;box-shadow:0 24px 50px -24px rgba(0,0,0,.5)}
+.way .peek img{width:100%;height:100%;object-fit:cover}
+.way:hover .peek{opacity:1;transform:translateY(-50%) rotate(3deg) scale(1)}
+
+/* ---------- donate band ---------- */
+.give .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}
+.reasons{display:grid;gap:0;border-top:1px solid rgba(242,244,239,.18)}
+.reason{padding:24px 0;border-bottom:1px solid rgba(242,244,239,.18);display:grid;grid-template-columns:44px 1fr;gap:18px}
+.reason svg{width:30px;height:30px;color:var(--straw)}
+.reason h3{font-size:24px;margin-bottom:6px}
+.reason p{color:var(--on-dark-2);font-size:16px}
+.pay{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.handle{display:inline-flex;gap:8px;align-items:center;font-size:15px;color:var(--on-dark-2);margin-top:18px}
+.handle code{font-family:var(--f-body);font-weight:700;color:var(--on-dark);background:rgba(242,244,239,.1);padding:4px 10px;border-radius:8px}
+
+/* ---------- farm collage ---------- */
+.farm .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px;margin-top:56px}
+.farm figure{margin:0;border-radius:var(--r);overflow:hidden;background:var(--muzzle-2);position:relative}
+.farm figure img{width:100%;height:100%;object-fit:cover}
+.farm figcaption{position:absolute;left:12px;bottom:12px;background:rgba(242,244,239,.94);color:var(--ink);font-size:13.5px;font-weight:600;padding:7px 12px;border-radius:10px;max-width:calc(100% - 24px)}
+.farm .f1{grid-column:1 / span 5;grid-row:span 2;aspect-ratio:3/4}
+.farm .f2{grid-column:6 / span 4;aspect-ratio:4/3}
+.farm .f3{grid-column:10 / span 3;aspect-ratio:3/4}
+.farm .f4{grid-column:6 / span 3;aspect-ratio:3/4}
+.farm .f5{grid-column:9 / span 4;aspect-ratio:4/3;align-self:end}
+.farm .copy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:end}
+
+/* ---------- page heads ---------- */
+.ph-head{padding-block:64px 72px}
+.ph-head .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:48px;align-items:end}
+.ph-head h1{margin-top:18px}
+
+/* ---------- adopt page ---------- */
+.tabs{display:inline-flex;gap:4px;background:var(--muzzle-2);padding:5px;border-radius:999px;position:relative;flex-wrap:wrap}
+.tabs button{font:inherit;font-weight:600;font-size:15px;border:0;background:transparent;color:var(--ink);padding:10px 18px;border-radius:999px;cursor:pointer;position:relative;z-index:1;transition:color .25s}
+.tabs button[aria-selected=true]{color:var(--field)}
+.tabs .ind{position:absolute;top:5px;left:0;height:calc(100% - 10px);background:var(--ink);border-radius:999px;transition:transform .45s var(--ease), width .45s var(--ease)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px;margin-top:36px}
+.pgrid .pc{flex:none}
+.pgrid .pc[hidden]{display:none}
+.note{font-size:14.5px;color:var(--ink-2);margin-top:22px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}
+.list-q{border-top:1px solid var(--line)}
+.list-q > div{padding:22px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:24px}
+.list-q h3{font-size:22px}
+.list-q p{color:var(--ink-2);font-size:16px}
+.spot{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px;align-items:center}
+.spot .pic{border-radius:24px;overflow:hidden;aspect-ratio:3/4;max-width:420px;background:var(--muzzle-2)}
+.spot .pic img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- events ---------- */
+.ev{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:32px;align-items:center;padding:32px 0;border-bottom:1px solid var(--line)}
+.ev:first-child{border-top:1px solid var(--line)}
+.ev .date{font-family:var(--f-display);line-height:1}
+.ev .date b{display:block;font-size:64px;font-weight:800;letter-spacing:-.04em}
+.ev .date span{font-size:15px;font-weight:600;color:var(--ink-2)}
+.ev h3{font-size:30px;margin-bottom:8px}
+.ev p{color:var(--ink-2);font-size:16px}
+.ev .state{font-size:13.5px;font-weight:700;padding:7px 12px;border-radius:10px;background:var(--muzzle-2);color:var(--ink-2);white-space:nowrap}
+.visit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+.visit figure{margin:0;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:var(--muzzle-2)}
+.visit figure img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- donate page ---------- */
+.gways{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:48px}
+.gw{background:var(--card);border-radius:var(--r);padding:32px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.gw h3{font-size:30px}
+.gw p{color:var(--ink-2);font-size:16px}
+.gw .btn{align-self:flex-start;margin-top:auto}
+.gw .val{font-weight:700;color:var(--ink);word-break:break-word}
+.gw.feature{background:var(--heart);color:#fff}
+.gw.feature p{color:rgba(255,255,255,.88)}
+.grant{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center;background:var(--card);border-radius:var(--r);padding:30px 32px;margin-top:22px}
+.grant .seal{width:84px;height:84px;border-radius:50%;background:var(--muzzle-2);display:grid;place-items:center;color:var(--pine)}
+.grant .seal svg{width:44px;height:44px}
+.grant p{color:var(--ink-2)}
+.grant b{color:var(--ink)}
+
+/* ---------- about ---------- */
+.crew{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin-top:56px}
+.mate{display:flex;flex-direction:column;gap:14px}
+.mate .face{width:100%;aspect-ratio:1/1;border-radius:50%;overflow:hidden;background:var(--muzzle-2);max-width:220px}
+.mate .face img{width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
+.mate h3{font-size:26px}
+.mate .role{font-size:14.5px;font-weight:700;color:var(--heart);margin-top:-6px}
+.mate p{color:var(--ink-2);font-size:15.5px}
+.story{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px}
+.story .body{display:grid;gap:20px;font-size:18px;color:var(--ink-2);max-width:62ch}
+.story .body p:first-child{font-family:var(--f-display);font-weight:600;font-size:clamp(24px,2.4vw,32px);line-height:1.25;color:var(--ink);letter-spacing:-.01em}
+.mv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:56px}
+.mv div{border-radius:var(--r);padding:34px;background:rgba(242,244,239,.07);box-shadow:inset 0 0 0 1px rgba(242,244,239,.16)}
+.mv h3{font-size:26px;margin-bottom:12px;color:var(--straw)}
+.mv p{color:var(--on-dark-2)}
+.alum{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:center}
+.alum .pic{border-radius:24px;overflow:hidden;aspect-ratio:4/5;max-width:400px}
+.alum .pic img{width:100%;height:100%;object-fit:cover}
+.contact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:48px}
+.ci{background:var(--card);border-radius:var(--r);padding:28px;min-width:0}
+.ci span{display:block;font-size:14px;color:var(--ink-2);margin-bottom:8px}
+.ci b{display:block;font-family:var(--f-display);font-size:24px;font-weight:700;letter-spacing:-.01em;word-break:break-word;user-select:all}
+.ci p{font-size:15px;color:var(--ink-2);margin-top:8px}
+
+/* ---------- footer ---------- */
+.foot{background:var(--ink);color:var(--on-dark);padding-block:88px 40px}
+.foot .big{font-family:var(--f-display);font-weight:800;font-size:clamp(44px,7vw,104px);letter-spacing:-.035em;line-height:.95}
+.foot .big a{text-decoration:none;color:var(--heart);transition:color .3s}
+.foot .big a:hover{color:var(--straw)}
+.foot .cols{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;margin-top:72px;padding-top:36px;border-top:1px solid rgba(242,244,239,.16);font-size:15px}
+.foot h4{font-family:var(--f-body);font-size:13.5px;font-weight:600;color:var(--on-dark-2);margin-bottom:12px;letter-spacing:.01em}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.foot a{text-decoration:none;color:var(--on-dark)}
+.foot a:hover{color:var(--straw)}
+.foot .brandf{display:flex;gap:14px;align-items:center}
+.foot .brandf img{width:54px;background:#fff;border-radius:12px;padding:4px}
+.foot .legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:56px;font-size:13.5px;color:var(--on-dark-2)}
+
+/* ---------- reveal ---------- */
+.js [data-r]{opacity:0;transform:translateY(34px)}
+@media (prefers-reduced-motion: reduce){
+  .js [data-r]{opacity:1;transform:none}
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .nav{display:none}
+  .menu-btn{display:inline-flex}
+  .hdr .cta{display:none}
+  .hero .wrap{grid-template-columns:1fr;gap:24px}
+  .fan{max-width:620px;width:100%;margin:0 auto}
+  .crew{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .foot .cols{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  body{font-size:16px}
+  .pad{padding-block:84px}
+  .beat .stmt,.give .wrap,.split,.spot,.story,.alum,.farm .copy,.ph-head .wrap{grid-template-columns:1fr;gap:32px}
+  .steps,.gways,.mv,.contact{grid-template-columns:1fr}
+  .way{grid-template-columns:1fr auto;gap:12px 20px}
+  .way p{grid-column:1 / -1;grid-row:2}
+  .way .peek{display:none}
+  .farm .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .farm .grid figure{grid-column:auto;grid-row:auto;aspect-ratio:3/4}
+  .farm .grid .f1{grid-column:1 / -1;aspect-ratio:4/3}
+  .ev{grid-template-columns:1fr;gap:12px}
+  .ev .state{justify-self:start}
+  .visit{grid-template-columns:1fr}
+  .list-q > div{grid-template-columns:1fr;gap:6px}
+  .track{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;margin-right:calc(-1 * max(24px, env(safe-area-inset-right,0px)))}
+  .track .pc{scroll-snap-align:start;flex-basis:78%}
+}
+@media (max-width:520px){
+  .wrap{padding-left:max(18px, env(safe-area-inset-left,0px));padding-right:max(18px, env(safe-area-inset-right,0px))}
+  .brand small{display:none}
+  .fan{gap:12px}
+  .kc{padding:8px 8px 12px;border-radius:18px}
+  .kc .ph{border-radius:12px}
+  .kc .tag{flex-direction:column;gap:2px;padding:10px 4px 0}
+  .kc .tag b{font-size:20px}
+  .kc .tag span{text-align:left;font-size:12.5px}
+  .kc.k3 .ph{min-height:240px}
+  .crew{grid-template-columns:1fr 1fr;gap:28px 16px}
+  .mate h3{font-size:21px}
+  .foot .cols{grid-template-columns:1fr}
+  .grant{grid-template-columns:1fr}
+  .mm nav a{font-size:38px}
+}
+</style>
+</head>
+<body>
+
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Hamilton's Healing Hearts home">
+      <img src="img/logo.png" alt="" width="46" height="39">
+      <span><b>Hamilton's Healing Hearts</b><small>Senior and special-needs rescue</small></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a class="nl" href="#adopt">Adopt</a>
+      <a class="nl" href="#events">Events</a>
+      <a class="nl" href="#donate">Donate</a>
+      <a class="nl" href="#about">About us</a>
+    </nav>
+    <a class="btn btn-red btn-sm cta" href="https://airtable.com/shrhLwoPZR4kLOh3A" target="_blank" rel="noopener">Apply to adopt</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mm"><span></span></button>
+  </div>
+</header>
+
+<div class="mm" id="mm" aria-hidden="true">
+  <nav aria-label="Mobile">
+    <a href="#home">Home</a>
+    <a href="#adopt">Adopt</a>
+    <a href="#events">Events</a>
+    <a href="#donate">Donate</a>
+    <a href="#about">About us</a>
+  </nav>
+  <a class="btn btn-red" href="https://airtable.com/shrhLwoPZR4kLOh3A" target="_blank" rel="noopener" style="align-self:flex-start">Apply to adopt</a>
+  <p>7494 NC Highway 11, Willard, NC 28478<br>(910) 271-5170</p>
+</div>
+
+<main id="main">
+
+<!-- ===================== HOME ===================== -->
+<div class="view" data-view="home">
+
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="kicker">A 501(c)(3) rescue farm in Willard, North Carolina</span>
+        <h1 class="h-xl" data-lines><span class="line"><span>Golden years</span></span><span class="line"><span>belong at <span class="red">home.</span></span></span></h1>
+        <p class="lede" data-r>We take in at-risk, elderly and special-needs dogs and cats, give them the vet care they've been missing, and find them families who'll make their golden years their best ones.</p>
+        <div class="ctas" data-r>
+          <a class="btn btn-ink" href="#adopt">Meet the pets <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-line" href="#donate">Give to their care</a>
+        </div>
+        <div class="hero-meta" data-r>
+          <span><b>Adopting within</b> 100 miles of Pender County</span>
+          <span><b>Visits</b> by appointment, any day</span>
+          <span class="gm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/></svg>2026 Grey Muzzle Incubator Grantee</span>
+        </div>
+      </div>
+      <div class="fan" aria-label="Pets waiting for a home">
+        <div class="kc k1"><div class="ph"><img src="img/pet-titus.jpg" alt="Titus, a black and white senior bulldog, standing in the grass" width="356" height="340"></div><div class="tag"><b>Titus</b><span>Senior bulldog</span></div></div>
+        <div class="kc k2"><div class="ph"><img src="img/pet-callie.jpg" alt="Callie, a brindle pit bull, wearing heart-shaped sunglasses" width="666" height="494"></div><div class="tag"><b>Callie</b><span>Adult pit bull</span></div></div>
+        <div class="kc k3"><div class="ph"><img src="img/ruby-hero.jpg" alt="Ruby, a white senior Spitz in a pink harness" width="300" height="400"></div><div class="tag"><b>Ruby</b><span>Senior Spitz</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="beat" aria-label="Our story">
+    <div class="wrap">
+      <svg viewBox="0 0 1200 160" aria-hidden="true" preserveAspectRatio="none">
+        <path class="trace-bg" d="M0 100 H1200"/>
+        <path class="trace" id="trace" d="M0 100 H250 L272 100 L290 60 L306 142 L326 18 L346 128 L362 100 H560 L580 100 L596 74 L612 120 L628 100 H820 C838 100 846 100 856 100 C870 72 900 64 918 82 C926 90 930 98 934 104 C938 98 942 90 950 82 C968 64 998 72 1012 100 C1024 124 976 146 934 156 C892 146 844 124 856 100"/>
+      </svg>
+      <div class="stmt">
+        <span class="kicker">How it started</span>
+        <div>
+          <p class="big" data-words>In early 2021, Danielle Miller started fostering the dogs and cats shelters struggle to place: the seniors and the special-needs pets. That foster home became Hamilton's Healing Hearts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="waiting pad-s" id="waiting">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <span class="kicker">Waiting for a family</span>
+          <h2 class="h-l" style="margin-top:14px">Who's here now</h2>
+        </div>
+        <a class="btn btn-line" href="#adopt">See every pet</a>
+      </div>
+    </div>
+    <div class="wrap" style="overflow:visible">
+      <div class="track" id="track"></div>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <span class="kicker">How adoption works</span>
+      <h2 class="h-l" style="margin-top:14px;max-width:16ch" data-lines><span class="line"><span>Three steps,</span></span><span class="line"><span>and a 10-day try-out.</span></span></h2>
+      <div class="steps" data-steps>
+        <div class="step"><span class="n">Step 1</span><h3>Apply</h3><p>Fill out the adoption application online. It takes about ten minutes and helps us match you with the right pet.</p><i class="bar"></i></div>
+        <div class="step"><span class="n">Step 2</span><h3>Meet the pet</h3><p>Take your match home for a 10-day try-out, so you both know it's right before anything is final.</p><i class="bar"></i></div>
+        <div class="step"><span class="n">Step 3</span><h3>Sign the contract</h3><p>Sign the adoption contract and your new family member is officially home.</p><i class="bar"></i></div>
+      </div>
+      <div class="facts" data-r>
+        <span><b>Fees</b> are set case by case</span>
+        <span><b>Fostering</b> comes with supplies and vet care covered</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad-s" style="padding-top:0">
+    <div class="wrap">
+      <span class="kicker">Ways to help</span>
+      <div class="ways">
+        <a class="way" href="#adopt"><h3>Adopt</h3><p>Give a senior or special-needs pet the soft landing they've been waiting for.</p><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="peek"><img src="img/pet-bobo.jpg" alt=""></span></a>
+        <a class="way" href="#adopt-foster"><h3>Foster</h3><p>Open your home for a while. We cover supplies and vet care, you cover the couch.</p><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="peek"><img src="img/event-pup.jpg" alt=""></span></a>
+        <a class="way" href="#about-contact"><h3>Volunteer</h3><p>Walk dogs, help on the farm, drive transports or work an adoption event.</p><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="peek"><img src="img/chris-kennel.jpg" alt=""></span></a>
+        <a class="way" href="#donate"><h3>Donate</h3><p>Every gift goes to vet bills, warm kennels and the farm that keeps them safe.</p><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="peek"><img src="img/pet-titus.jpg" alt=""></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="give dark pad">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Why your gift matters</span>
+        <h2 class="h-l" style="margin-top:14px" data-lines><span class="line"><span>Old dogs need</span></span><span class="line"><span>more care, not less.</span></span></h2>
+        <p class="lede" style="margin-top:24px" data-r>Senior and special-needs pets often need dental work, bloodwork and daily medication. Donations are what let us say yes to them.</p>
+        <div class="pay" data-r>
+          <a class="btn btn-light" href="https://www.paypal.com/biz/fund?id=CFN7WXCUSM244" target="_blank" rel="noopener">Give with PayPal</a>
+          <a class="btn btn-red" href="https://account.venmo.com/u/HamiltonsHearts2021" target="_blank" rel="noopener">Give with Venmo</a>
+        </div>
+        <div class="handle" data-r>Venmo <code>@HamiltonsHearts2021</code></div>
+      </div>
+      <div class="reasons">
+        <div class="reason" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.3-9A5.3 5.3 0 0 1 12 6.6 5.3 5.3 0 0 1 21.3 12C19 16.5 12 21 12 21z"/><path d="M8 12h2l1.2-2.2L13 14l1-2h2"/></svg><div><h3>Medical and vet care</h3><p>Exams, surgery, dental care and the daily medicine that keeps an older pet comfortable.</p></div></div>
+        <div class="reason" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><div><h3>A safe, loving shelter</h3><p>Insulated kennels, clean bedding, good food and a quiet farm while they wait for a family.</p></div></div>
+        <div class="reason" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 8h7.5a3 3 0 0 1 0 6H8"/></svg><div><h3>The power of giving</h3><p>Every gift, big or small, goes straight to the pets in our care.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="farm pad">
+    <div class="wrap">
+      <div class="copy">
+        <div>
+          <span class="kicker">Life on the farm</span>
+          <h2 class="h-l" style="margin-top:14px" data-lines><span class="line"><span>Not just</span></span><span class="line"><span>dogs and cats.</span></span></h2>
+        </div>
+        <p class="lede" data-r>The rescue lives on a working farm in Willard, with pigs, cows and a crew of volunteers who keep the kennels warm and the gates fixed. Come see it for yourself. We're always open by appointment.</p>
+      </div>
+      <div class="grid">
+        <figure class="f1" data-r><img src="img/farm-sign.jpg" alt="Hand-carved wooden farm sign, established 2020" loading="lazy"><figcaption>The farm, established 2020</figcaption></figure>
+        <figure class="f2" data-r><img src="img/cows.jpg" alt="Two Highland-style cows at the fence" loading="lazy"></figure>
+        <figure class="f3" data-r><img src="img/pig.jpg" alt="A black pot-bellied pig being held" loading="lazy"></figure>
+        <figure class="f4" data-r><img src="img/chris-kennel.jpg" alt="Volunteer Chris installing insulation in the kennel building" loading="lazy"><figcaption>Chris insulating the kennels</figcaption></figure>
+        <figure class="f5" data-r><img src="img/event-booth.jpg" alt="Volunteers meeting the public with a dog at an adoption event" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== ADOPT ===================== -->
+<div class="view" data-view="adopt">
+  <section class="ph-head">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Adopt</span>
+        <h1 class="h-xl" data-lines><span class="line"><span>Find your</span></span><span class="line"><span>new old friend.</span></span></h1>
+      </div>
+      <p class="lede" data-r>Every pet here has been vetted, loved on and gotten to know by our crew. Tell us about your home and we'll help you find the right match.</p>
+    </div>
+  </section>
+
+  <section class="pad-s" style="padding-top:0">
+    <div class="wrap">
+      <div class="tabs" role="tablist" aria-label="Filter pets">
+        <span class="ind" aria-hidden="true"></span>
+        <button role="tab" aria-selected="true" data-f="all" id="tab-all">All pets</button>
+        <button role="tab" aria-selected="false" data-f="senior" id="tab-senior">Seniors</button>
+        <button role="tab" aria-selected="false" data-f="dog" id="tab-dog">Dogs</button>
+        <button role="tab" aria-selected="false" data-f="cat" id="tab-cat">Cats</button>
+      </div>
+      <div class="pgrid" id="pgrid" role="tabpanel" aria-label="Adoptable pets"></div>
+      <p class="note">Listings shown November 2026. Ask about any pet by applying, and we'll reach out to set up a meeting.</p>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap split">
+      <div>
+        <span class="kicker">Before you apply</span>
+        <h2 class="h-l" style="margin-top:14px">Good to know</h2>
+        <div style="margin-top:32px" data-r><a class="btn btn-red" href="https://airtable.com/shrhLwoPZR4kLOh3A" target="_blank" rel="noopener">Start the application <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+      <div class="list-q">
+        <div data-r><h3>Where we adopt</h3><p>We place pets within 100 miles of Pender County, North Carolina.</p></div>
+        <div data-r><h3>The try-out</h3><p>Every adoption starts with a 10-day stay at home, so you can see how your pet settles in before you sign.</p></div>
+        <div data-r><h3>Fees</h3><p>Fees are set case by case. We'll go over it with you before the try-out.</p></div>
+        <div data-r><h3>Visiting</h3><p>We are always open. Call or email to schedule a visit to the rescue and meet the pets in person.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark pad" id="adopt-foster">
+    <div class="wrap spot">
+      <div class="pic" data-r><img src="img/event-pup.jpg" alt="A smiling volunteer hugging a black and white puppy" loading="lazy"></div>
+      <div>
+        <span class="kicker">Foster, volunteer or rehome</span>
+        <h2 class="h-l" style="margin-top:14px" data-lines><span class="line"><span>Not ready to adopt?</span></span><span class="line"><span>You can still help.</span></span></h2>
+        <div class="reasons" style="margin-top:36px">
+          <div class="reason" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><div><h3>Foster</h3><p>Give a pet a break from the kennel. Supplies and vet care are covered by the rescue.</p></div></div>
+          <div class="reason" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.3-9A5.3 5.3 0 0 1 12 6.6 5.3 5.3 0 0 1 21.3 12C19 16.5 12 21 12 21z"/></svg><div><h3>Volunteer</h3><p>Help with farm chores, transport, events and plain old dog walking.</p></div></div>
+          <div class="reason" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M12 4v16"/></svg><div><h3>Surrendering a pet</h3><p>If you can no longer care for an older or special-needs pet, reach out and we'll talk through options with you.</p></div></div>
+        </div>
+        <div class="pay" data-r><a class="btn btn-light" href="#about-contact">Get in touch</a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== EVENTS ===================== -->
+<div class="view" data-view="events">
+  <section class="ph-head">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Events</span>
+        <h1 class="h-xl" data-lines><span class="line"><span>Come say hi</span></span><span class="line"><span>in person.</span></span></h1>
+      </div>
+      <p class="lede" data-r>We bring adoptable pets to adoption events around Leland and Brunswick County, and new dates get posted to our social pages first.</p>
+    </div>
+  </section>
+
+  <section class="pad-s" style="padding-top:0">
+    <div class="wrap">
+      <div class="evs">
+        <div class="ev" data-r>
+          <div class="date"><b>Any</b><span>day, by appointment</span></div>
+          <div><h3>Visit the rescue</h3><p>We're always open. Call (910) 271-5170 or email us to schedule a visit to the farm in Willard.</p></div>
+          <a class="btn btn-ink btn-sm" href="#about-contact">Schedule a visit</a>
+        </div>
+        <div class="ev" data-r>
+          <div class="date"><b>18</b><span>April 2026</span></div>
+          <div><h3>Spring Adopt-a-thon</h3><p>Petsense, 1215 West Gate Dr, Leland. 10 AM to 3 PM.</p></div>
+          <span class="state">Past event</span>
+        </div>
+        <div class="ev" data-r>
+          <div class="date"><b>11</b><span>April 2026</span></div>
+          <div><h3>Partners in Paws</h3><p>Brunswick County Animal Protective Services, 429 Green Swamp Rd NW, Supply. 10 AM to 2 PM.</p></div>
+          <span class="state">Past event</span>
+        </div>
+      </div>
+      <p class="note">New events are announced on Facebook and Instagram. <a href="https://linktr.ee/hamiltonshealinghearts" target="_blank" rel="noopener">Follow us there</a> to hear first.</p>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <span class="kicker">From recent events</span>
+      <div class="visit" style="margin-top:28px">
+        <figure data-r><img src="img/event-booth.jpg" alt="Our booth at an adoption event, with a small dog meeting visitors" loading="lazy"></figure>
+        <figure data-r><img src="img/event-pup.jpg" alt="A volunteer hugging a puppy at an adoption event" loading="lazy" style="object-position:50% 30%"></figure>
+      </div>
+      <div class="grant" data-r style="margin-top:22px">
+        <div class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M10 9l4 2-4 2z"/><path d="M8 21h8"/></svg></div>
+        <div><p><b>As seen on WECT.</b> Our Mr. Wilson made his live TV debut on WECT.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== DONATE ===================== -->
+<div class="view" data-view="donate">
+  <section class="ph-head">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Donate</span>
+        <h1 class="h-xl" data-lines><span class="line"><span>Keep a grey</span></span><span class="line"><span>muzzle <span class="red">going.</span></span></span></h1>
+      </div>
+      <p class="lede" data-r>Hamilton's Healing Hearts, Inc. is a 501(c)(3) nonprofit. Your gift pays for vet care, shelter and food for the pets other places pass over.</p>
+    </div>
+  </section>
+
+  <section class="pad-s" style="padding-top:0">
+    <div class="wrap">
+      <div class="gways">
+        <div class="gw feature" data-r>
+          <h3>Give online</h3>
+          <p>Give any amount securely through PayPal.</p>
+          <a class="btn btn-light" href="https://www.paypal.com/biz/fund?id=CFN7WXCUSM244" target="_blank" rel="noopener">Donate with PayPal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <div class="gw" data-r>
+          <h3>Venmo</h3>
+          <p>Send any amount to <span class="val">@HamiltonsHearts2021</span></p>
+          <a class="btn btn-ink" href="https://account.venmo.com/u/HamiltonsHearts2021" target="_blank" rel="noopener">Open Venmo</a>
+        </div>
+        <div class="gw" data-r>
+          <h3>Amazon Wish List</h3>
+          <p>Send supplies straight to the rescue from our Amazon Wish List.</p>
+          <a class="btn btn-ink" href="https://www.hamiltonshealinghearts.com/wish-list/amazon-wish-list" target="_blank" rel="noopener">See the wish list</a>
+        </div>
+        <div class="gw" data-r>
+          <h3>Mail a check</h3>
+          <p>Make it out to Hamilton's Healing Hearts, Inc.</p>
+          <p class="val">7494 NC Highway 11<br>Willard, NC 28478</p>
+        </div>
+      </div>
+      <div class="grant" data-r>
+        <div class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/></svg></div>
+        <div><p><b>2026 Grey Muzzle Incubator Grantee.</b> We were selected for The Grey Muzzle Organization's incubator grant, which supports rescues growing their programs for senior dogs.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="give dark pad">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Where it goes</span>
+        <h2 class="h-l" style="margin-top:14px" data-lines><span class="line"><span>Every dollar</span></span><span class="line"><span>has a name.</span></span></h2>
+        <p class="lede" style="margin-top:24px" data-r>Right now that's Ruby, Titus, Bobo and the six others waiting for a family. Next month it'll be whoever needs us next.</p>
+        <div class="pay" data-r><a class="btn btn-light" href="#adopt">Meet them</a></div>
+      </div>
+      <div class="reasons">
+        <div class="reason" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.3-9A5.3 5.3 0 0 1 12 6.6 5.3 5.3 0 0 1 21.3 12C19 16.5 12 21 12 21z"/><path d="M8 12h2l1.2-2.2L13 14l1-2h2"/></svg><div><h3>Medical and vet care</h3><p>Exams, surgery, dental work and ongoing medication for seniors and special-needs pets.</p></div></div>
+        <div class="reason" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><div><h3>Safe and loving shelter</h3><p>Warm kennels, bedding and good food on the farm while they wait.</p></div></div>
+        <div class="reason" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H10"/></svg><div><h3>Sponsor through TREAT</h3><p>We're on the TREAT app, where you can sponsor and visit our adoptable dogs.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div class="view" data-view="about">
+  <section class="ph-head">
+    <div class="wrap">
+      <div>
+        <span class="kicker">About us</span>
+        <h1 class="h-xl" data-lines><span class="line"><span>A farm full of</span></span><span class="line"><span>second chances.</span></span></h1>
+      </div>
+      <p class="lede" data-r>A small crew in Pender County, caring for the pets who need the most and get chosen the least.</p>
+    </div>
+  </section>
+
+  <section class="pad-s" style="padding-top:0">
+    <div class="wrap story">
+      <span class="kicker">Our story</span>
+      <div class="body">
+        <p data-r>It started in early 2021, when Danielle Miller began fostering dogs and cats out of her home. That work became Hamilton's Healing Hearts.</p>
+        <p data-r>From the start, the focus has been the pets most shelters struggle to place: seniors, and dogs and cats with special needs. They get vet care, a warm kennel on the farm, and as much time as it takes to find the right family.</p>
+        <p data-r>In early 2024, Maddie Bushey joined as a volunteer and took on fostering, transport and the rescue's social pages. Today the rescue is a 501(c)(3) with a board, a team of volunteers and a 2026 Grey Muzzle Incubator grant.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark pad">
+    <div class="wrap">
+      <span class="kicker">What we're here for</span>
+      <h2 class="h-l" style="margin-top:14px;max-width:18ch" data-lines><span class="line"><span>Every pet deserves</span></span><span class="line"><span>a soft place to land.</span></span></h2>
+      <div class="mv">
+        <div data-r><h3>Our mission</h3><p>To rescue at-risk, elderly and special-needs dogs and cats, give them the medical care and comfort they need, and place them in loving homes.</p></div>
+        <div data-r><h3>Our vision</h3><p>A community where older and special-needs pets live out their golden years safe, loved and at home.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <span class="kicker">Meet the crew</span>
+      <h2 class="h-l" style="margin-top:14px">The people behind the pets</h2>
+      <div class="crew">
+        <div class="mate" data-r><div class="face"><img src="img/crew-danielle.jpg" alt="Danielle Miller with a small black dog and a corgi" loading="lazy"></div><h3>Danielle Miller</h3><span class="role">Founder and Director</span><p>Moved to North Carolina from New Hampshire in 2010 after a fire took her home and rescue. Certified in animal search and rescue, trained in canine and feline CPR, and helped the Pender County shelter through Hurricane Florence.</p></div>
+        <div class="mate" data-r><div class="face"><img src="img/crew-maddie.jpg" alt="Maddie Bushey holding two hound dogs" loading="lazy"></div><h3>Maddie Bushey</h3><span class="role">President</span><p>Volunteering since early 2024. Fosters, drives transports, and runs our Facebook, Instagram and merch.</p></div>
+        <div class="mate" data-r><div class="face"><img src="img/crew-wendy.jpg" alt="Wendy Schraen smiling with a white dog" loading="lazy"></div><h3>Wendy Schraen</h3><span class="role">Board Member</span><p>Also volunteers at the Brunswick County animal shelter, and shares her home with three rescue dogs.</p></div>
+        <div class="mate" data-r><div class="face"><img src="img/crew-chris.jpg" alt="Chris Caison" loading="lazy"></div><h3>Chris Caison</h3><span class="role">Volunteer, maintenance and farm</span><p>Navy veteran (2000 to 2005) who works at the VA in Onslow County. He's the reason the kennels are insulated.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad-s">
+    <div class="wrap alum">
+      <div class="pic" data-r><img src="img/alum-boxer.jpg" alt="A happy adopted boxer sitting on turf" loading="lazy"></div>
+      <div>
+        <span class="kicker">Friends of Hamilton's</span>
+        <h2 class="h-l" style="margin-top:14px" data-lines><span class="line"><span>Every one of them</span></span><span class="line"><span>went home.</span></span></h2>
+        <p class="lede" style="margin-top:24px" data-r>Hazel, adopted November 10, 2021, was one of the first. Adopted from us? Send a photo and we'll add your pet to the wall.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" id="about-contact">
+    <div class="wrap">
+      <span class="kicker">Contact</span>
+      <h2 class="h-l" style="margin-top:14px">Call, email or stop by</h2>
+      <div class="contact">
+        <div class="ci" data-r><span>Phone</span><b>(910) 271-5170</b><p>Call to schedule a visit.</p></div>
+        <div class="ci" data-r><span>Email</span><b>hamiltonshealinghearts@gmail.com</b><p>For adoption, fostering and volunteer questions.</p></div>
+        <div class="ci" data-r><span>The rescue</span><b>7494 NC Highway 11, Willard, NC 28478</b><p>Visits by appointment.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p class="big">Somebody's waiting<br>for you. <a href="#adopt">Meet them.</a></p>
+    <div class="cols">
+      <div class="brandf"><img src="img/logo.png" alt="" width="54" height="46"><div><b style="font-family:var(--f-display);font-size:18px">Hamilton's Healing Hearts, Inc.</b><br><span style="color:var(--on-dark-2)">A 501(c)(3) nonprofit rescue</span></div></div>
+      <div><h4>Visit</h4><ul><li>7494 NC Highway 11</li><li>Willard, NC 28478</li><li>By appointment</li></ul></div>
+      <div><h4>Reach us</h4><ul><li>(910) 271-5170</li><li>hamiltonshealinghearts@gmail.com</li><li><a href="https://linktr.ee/hamiltonshealinghearts" target="_blank" rel="noopener">Facebook and Instagram</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="#adopt">Adopt</a></li><li><a href="#events">Events</a></li><li><a href="#donate">Donate</a></li><li><a href="#about">About us</a></li></ul></div>
+    </div>
+    <div class="legal"><span>&copy; 2026 Hamilton's Healing Hearts, Inc.</span><span>Site concept by BuildSiteCo</span></div>
+  </div>
+</footer>
+
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var $=function(s,c){return (c||document).querySelector(s)}, $$=function(s,c){return [].slice.call((c||document).querySelectorAll(s))};
+  var arrow='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var APPLY='https://airtable.com/shrhLwoPZR4kLOh3A';
+  var PETS=[
+    {n:'Ruby',img:'pet-ruby',kind:'dog',breed:'Spitz, small',sex:'Female',age:'Senior'},
+    {n:'Titus',img:'pet-titus',kind:'dog',breed:'Bulldog',sex:'Male',age:'Senior'},
+    {n:'Bobo',img:'pet-bobo',kind:'dog',breed:'Shih Tzu',sex:'Male',age:'Adult'},
+    {n:'Callie',img:'pet-callie',kind:'dog',breed:'Pit bull terrier',sex:'Female',age:'Adult'},
+    {n:'Dante',img:'pet-dante',kind:'dog',breed:'Pug and Chihuahua',sex:'Male',age:'Adult'},
+    {n:'Charles',img:'pet-charles',kind:'dog',breed:'Pit bull and Boxer',sex:'Male',age:'Adult'},
+    {n:'Tobias',img:'pet-tobias',kind:'dog',breed:'Redtick Coonhound',sex:'Male',age:'Adult'},
+    {n:'Aries',img:'pet-aries',kind:'dog',breed:'German Shepherd',sex:'Male',age:'Young'},
+    {n:'Luna',img:'pet-luna',kind:'cat',breed:'Domestic Shorthair',sex:'Female',age:'Young'}
+  ];
+  function card(p){
+    var sr=p.age==='Senior';
+    return '<a class="pc" href="'+APPLY+'" target="_blank" rel="noopener" data-kind="'+p.kind+'" data-age="'+p.age.toLowerCase()+'">'+
+      '<div class="ph"><img src="img/'+p.img+'.jpg" alt="'+p.n+', '+p.age.toLowerCase()+' '+p.breed+'" loading="lazy">'+(sr?'<span class="flag sr">Senior</span>':'')+'</div>'+
+      '<div class="info"><h3>'+p.n+'</h3><dl><dt>Breed</dt><dd>'+p.breed+'</dd><dt>Sex</dt><dd>'+p.sex+'</dd><dt>Age</dt><dd>'+p.age+'</dd></dl></div>'+
+      '<span class="go">Ask about '+p.n+arrow+'</span></a>';
+  }
+  $('#track').innerHTML=PETS.map(card).join('')+'<a class="pc more" href="#adopt"><h3>Ready to meet them?</h3><p>See every pet, filter by seniors, and start your application.</p><span class="go">All adoptable pets'+arrow+'</span></a>';
+  $('#pgrid').innerHTML=PETS.map(card).join('');
+
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var G=window.gsap, ST=window.ScrollTrigger, hasG=!!(G&&ST)&&!reduce;
+  if(hasG){document.documentElement.classList.add('js');G.registerPlugin(ST)}
+
+  var main=$('#main'), hdr=$('#hdr'), views=$$('.view'), names=views.map(function(v){return v.dataset.view});
+  var cur=null, ctx=null, first=true;
+
+  function routeName(){var h=(location.hash||'').slice(1);var base=h.split('-')[0];return {view:names.indexOf(base)<0?'home':base, anchor:names.indexOf(base)>=0&&h!==base?h:null}}
+  function setNav(n){$$('.nav a.nl, .mm nav a').forEach(function(a){if(a.getAttribute('href')==='#'+n)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')})}
+  function show(r){
+    views.forEach(function(v){v.classList.toggle('on',v.dataset.view===r.view)});
+    setNav(r.view);
+    var target=r.anchor&&document.getElementById(r.anchor);
+    window.scrollTo(0,target?target.getBoundingClientRect().top+window.pageYOffset-90:0);
+    init($('.view.on'));
+  }
+  function go(){
+    var r=routeName(); closeMenu();
+    if(first){first=false;cur=r.view;show(r);return}
+    if(r.view===cur){var t=r.anchor&&document.getElementById(r.anchor);if(t)window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-90,behavior:'smooth'});else if(!r.anchor)window.scrollTo({top:0,behavior:'smooth'});return}
+    cur=r.view; main.classList.add('leaving');
+    setTimeout(function(){show(r);requestAnimationFrame(function(){main.classList.remove('leaving')})},260);
+  }
+  window.addEventListener('hashchange',go);
+
+  function init(v){
+    setupTabs(v);
+    if(!hasG) return;
+    if(ctx) ctx.revert();
+    ctx=G.context(function(){
+      // headline lines
+      $$('[data-lines]',v).forEach(function(h){
+        G.fromTo($$('.line > span',h),{yPercent:110},{yPercent:0,duration:1.15,ease:'expo.out',stagger:.1,scrollTrigger:{trigger:h,start:'top 92%',once:true}});
+      });
+      // reveals
+      ST.batch($$('[data-r]',v),{start:'top 94%',once:true,onEnter:function(b){G.to(b,{opacity:1,y:0,duration:1,ease:'expo.out',stagger:.08,overwrite:true})}});
+      // hero cards fan in
+      var kcs=$$('.kc',v);
+      if(kcs.length){
+        G.from([kcs[2],kcs[0],kcs[1]],{y:90,opacity:0,duration:1.3,ease:'expo.out',stagger:.14,delay:.15});
+        G.from($$('.kc img',v),{scale:1.18,duration:1.8,ease:'expo.out',stagger:.14,delay:.15});
+      }
+      // heartbeat trace
+      var tr=$('#trace',v);
+      if(tr){
+        var L=tr.getTotalLength(); tr.style.strokeDasharray=L; tr.style.strokeDashoffset=L;
+        G.to(tr,{strokeDashoffset:0,ease:'none',scrollTrigger:{trigger:tr.closest('section'),start:'top 80%',end:'center 45%',scrub:.6}});
+      }
+      // word-by-word statement
+      $$('[data-words]',v).forEach(function(p){
+        if(!p.dataset.split){p.dataset.split=1;p.setAttribute('aria-label',p.textContent);p.innerHTML=p.textContent.split(' ').map(function(w){return '<span class="w" aria-hidden="true">'+w+'</span>'}).join(' ')}
+        G.to($$('.w',p),{opacity:1,stagger:.05,ease:'none',scrollTrigger:{trigger:p,start:'top 82%',end:'bottom 52%',scrub:true}});
+      });
+      // horizontal pets track (desktop)
+      var mm=G.matchMedia();
+      mm.add('(min-width: 861px)',function(){
+        var sec=$('#waiting',v), track=$('#track',v); if(!sec||!track) return;
+        var dist=function(){return Math.max(0,track.scrollWidth-track.parentNode.clientWidth+48)};
+        G.to(track,{x:function(){return -dist()},ease:'none',scrollTrigger:{trigger:sec,start:'top top',end:function(){return '+='+dist()},pin:true,scrub:.8,invalidateOnRefresh:true,anticipatePin:1}});
+      });
+      // steps progress bars
+      $$('[data-steps]',v).forEach(function(w){
+        G.to($$('.bar',w),{scaleX:1,duration:1.2,ease:'power3.inOut',stagger:.35,scrollTrigger:{trigger:w,start:'top 80%',once:true}});
+        G.from($$('.step',w),{y:60,opacity:0,duration:1,ease:'expo.out',stagger:.12,scrollTrigger:{trigger:w,start:'top 88%',once:true}});
+      });
+      // farm parallax
+      $$('.farm figure img',v).forEach(function(img,i){G.fromTo(img,{scale:1.15,yPercent:-4},{scale:1.15,yPercent:4,ease:'none',scrollTrigger:{trigger:img.parentNode,start:'top bottom',end:'bottom top',scrub:true}})});
+    },v);
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ST.refresh()});
+    setTimeout(function(){ST.refresh()},400);
+  }
+
+  function setupTabs(v){
+    $$('[role=tablist]',v).forEach(function(list){
+      if(list.dataset.ready) return; list.dataset.ready=1;
+      var tabs=$$('[role=tab]',list), ind=$('.ind',list), grid=$('#pgrid');
+      function place(t){if(!ind||!t.offsetWidth)return;ind.style.width=t.offsetWidth+'px';ind.style.transform='translateX('+t.offsetLeft+'px)'}
+      function sel(t,focus){
+        tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1});
+        place(t); if(focus)t.focus();
+        var f=t.dataset.f, shown=[];
+        $$('.pc',grid).forEach(function(c){var ok=f==='all'||(f==='senior'?c.dataset.age==='senior':c.dataset.kind===f);c.hidden=!ok;if(ok)shown.push(c)});
+        if(hasG) G.fromTo(shown,{y:24,opacity:0},{y:0,opacity:1,duration:.6,ease:'expo.out',stagger:.04});
+      }
+      tabs.forEach(function(t,i){
+        t.tabIndex=i===0?0:-1;
+        t.addEventListener('click',function(){sel(t)});
+        t.addEventListener('keydown',function(e){var k=e.key,j=-1;if(k==='ArrowRight')j=(i+1)%tabs.length;if(k==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;if(j>-1){e.preventDefault();sel(tabs[j],true)}});
+      });
+      requestAnimationFrame(function(){place(tabs[0])});
+      window.addEventListener('resize',function(){place(tabs.filter(function(t){return t.getAttribute('aria-selected')==='true'})[0])});
+      if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){place(tabs.filter(function(t){return t.getAttribute('aria-selected')==='true'})[0])});
+    });
+  }
+
+  // header hide on scroll down
+  var lastY=0,ticking=false;
+  function onScroll(){var y=window.pageYOffset;hdr.classList.toggle('solid',y>20);if(!document.body.classList.contains('menu-open'))hdr.classList.toggle('hide',y>lastY&&y>300);lastY=y;ticking=false}
+  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
+  document.addEventListener('focusin',function(e){if(hdr.contains(e.target))hdr.classList.remove('hide')});
+
+  // mobile menu
+  var mb=$('#menuBtn'), mmEl=$('#mm');
+  function closeMenu(){document.body.classList.remove('menu-open');mb.setAttribute('aria-expanded','false');mb.setAttribute('aria-label','Open menu');mmEl.setAttribute('aria-hidden','true')}
+  mb.addEventListener('click',function(){var o=document.body.classList.toggle('menu-open');mb.setAttribute('aria-expanded',o);mb.setAttribute('aria-label',o?'Close menu':'Open menu');mmEl.setAttribute('aria-hidden',!o)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+
+  go();
+})();
+</script>
+
+</body>
+</html>
